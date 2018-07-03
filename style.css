@@ -1,0 +1,13 @@
+.command, .prompt {
+  color: #2FD0C3;
+  font-weight: bold;
+}
+
+.heading {
+  color: green;
+  font-weight: bold;
+}
+
+.menu-items {
+  color: lightgreen;
+}

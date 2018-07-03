@@ -1,0 +1,4 @@
+ASCII text generator. The heading font is called Slant
+http://patorjk.com/software/taag/#p=display&f=Slant&t=TerminALL
+
+Resizing window once loaded should resize terminal. Might be the way I am setting height/width.
