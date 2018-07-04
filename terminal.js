@@ -5,6 +5,7 @@ let mode = ''
 var pwd = '/'
 var pwdStack = []
 pwdStack.push('/')
+var searchTerm = []
 
 modes = {
   0: 'terminal',
@@ -22,7 +23,7 @@ greetings = (term) => {
 }
 
 mainMenu = (term) => {
-  term.echo("</br>-- Main Menu --</br></br>1: CS:GO</br>2: NBA</br>3: AFL</br></br></br>", {
+  term.echo("</br>-- Main Menu --</br></br>1: CS:GO</br>2: NBA</br>3: AFL</br></br>", {
     raw: true
   });
 }
@@ -39,6 +40,11 @@ setPrompt = (term) => {
 
 setPwd = (command) => {
   //Not yet implemented
+}
+
+splitCommand = (command) => {
+  searchTerm = command.split(" ")
+  console.log(searchTerm)
 }
 
 commandNotFound = (command, term) => {
@@ -59,6 +65,7 @@ var terminal = $('#terminal').terminal(function(command, term) {
       if (command == 'home') {
         mode = ''
         setPrompt(term)
+        mainMenu(term)
       }
 
       if (command == 'pwd') {
@@ -71,8 +78,10 @@ var terminal = $('#terminal').terminal(function(command, term) {
           term.echo("CSGO STUFF GOES IN HERE");
           mode = 1;
         } else if (command == 'nba' || command == '2') {
-          term.echo("NBA STUFF GOES IN HERE");
           mode = 2;
+          term.echo("1: Schedule (Upcoming games)</br>2: Standings</br>3: Scores", {
+            raw: true
+          });
         } else if (command == 'afl' || command == '3') {
           term.echo("AFL STUFF GOES IN HERE");
           mode = 3;
@@ -82,7 +91,7 @@ var terminal = $('#terminal').terminal(function(command, term) {
         }
       }
 
-      //Set Modes
+      //Set Mode Information
       if (mode != '' && command != 'home') {
         if (mode == 1) {
           //CSGO MODE - Options for scores, streaming etc.
@@ -92,6 +101,20 @@ var terminal = $('#terminal').terminal(function(command, term) {
           //NBA MODE - Options for scores, streaming etc.
           loc = modes[mode];
           setPrompt(term)
+
+          splitCommand(command)
+
+          if (searchTerm[0] != 'nba') {
+            if (searchTerm[0] == 'schedule') {
+              term.echo('Print Schedule')
+            } else if (searchTerm[0] == 'standings') {
+              term.echo('Print Standings')
+            } else if (searchTerm[0] == 'scores') {
+              term.echo('Print Scores')
+            } else {
+              commandNotFound(command, term)
+            }
+          }
         } else if (mode == 3) {
           //AFL MODE - Options for scores, streaming etc.
           loc = modes[mode];
